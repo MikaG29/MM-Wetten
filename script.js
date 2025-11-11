@@ -1,7 +1,32 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+  // ---------------- Matrix Hintergrund ----------------
+  const canvas = document.getElementById('matrix');
+  const ctx = canvas.getContext('2d');
+  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+
+  const chars = '01';
+  const fontSize = 14;
+  const columns = Math.floor(canvas.width / fontSize);
+  const drops = Array(columns).fill(0);
+
+  function drawMatrix() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#00ff66';
+    ctx.font = fontSize + 'px monospace';
+    for (let i = 0; i < drops.length; i++) {
+      const text = chars.charAt(Math.floor(Math.random() * chars.length));
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+  }
+  setInterval(drawMatrix, 40);
+
   // ---------------- Rangliste ----------------
 
-  // Spieler-Daten: Array von Punkten pro Durchgang
   let spieler = [
     { name: 'Leo', punkte: [3] },
     { name: 'Mika', punkte: [3] },
@@ -12,18 +37,14 @@ document.addEventListener('DOMContentLoaded', () => {
     { name: 'Ruben', punkte: [0] },
   ];
 
-  // Alte Platzierungen aus localStorage laden
   let letztePlatzierung = JSON.parse(localStorage.getItem('letztePlatzierung')) || {};
 
-  // Punkte summieren
   spieler.forEach(s => {
     s.gesamt = s.punkte.reduce((sum, p) => sum + p, 0);
   });
 
-  // Sortieren nach Gesamtpunkten (absteigend)
   spieler.sort((a, b) => b.gesamt - a.gesamt);
 
-  // Platzierung mit Gleichständen berechnen
   let platz = 1;
   for (let i = 0; i < spieler.length; i++) {
     if (i > 0 && spieler[i].gesamt === spieler[i - 1].gesamt) {
@@ -31,10 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       spieler[i].platz = platz;
     }
-    platz = i + 2; // nächster Platzindex
+    platz = i + 2;
   }
 
-  // Vergleich zur alten Rangliste für Pfeile
   spieler.forEach(s => {
     const alt = letztePlatzierung[s.name];
     const neu = s.platz;
@@ -44,14 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
     else s.diff = 'same';
   });
 
-  // Neue Platzierungen speichern
   let neuePlatzierung = {};
   spieler.forEach(s => {
     neuePlatzierung[s.name] = s.platz;
   });
   localStorage.setItem('letztePlatzierung', JSON.stringify(neuePlatzierung));
 
-  // Tabelle anzeigen
   const tbody = document.querySelector('#rangliste tbody');
   spieler.forEach(s => {
     const tr = document.createElement('tr');
@@ -67,4 +85,5 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     tbody.appendChild(tr);
   });
+
 });

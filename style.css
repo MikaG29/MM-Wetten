@@ -4,14 +4,21 @@ body {
   overflow-y: auto; /* Scrollen erlaubt */
   font-family: monospace;
   color: #00ff66;
-  background: black; /* einfacher schwarzer Hintergrund */
+  background: black;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1; /* Hintergrund */
 }
 
 .container {
   width: 90%;
   max-width: 600px;
   margin: 50px auto;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.9); /* undurchsichtig */
   padding: 20px;
   border: 1px solid #00ff66;
   border-radius: 10px;
