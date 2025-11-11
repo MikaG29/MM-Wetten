@@ -35,7 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
     { name: 'Der Tobi', punkte: [0] },
     { name: 'Reisbällchen', punkte: [5] },
     { name: 'Ruben', punkte: [0] },
-    { name: 'Lucas', punkte: [0] }
+    { name: 'Lucas', punkte: [0] },
+    { name: 'Jul', punkte: [0] },
+    { name: 'Robert M.', punkte: [0] }
   ];
 
   let letztePlatzierung = JSON.parse(localStorage.getItem('letztePlatzierung')) || {};
