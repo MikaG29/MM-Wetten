@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // *** HAUPTDATEN: HIER die neuen Punkte pro Runde eintragen! ***
     let spieler = [
-        // Beispiel: Daten wurden für die neue Runde geändert
+        // Beispiel: Punkte R1, R2, R3. Die alte Rangliste wird anhand von R1+R2 berechnet!
         { name: 'Leo', punkte: [3, 3] }, 
         { name: 'Mika', punkte: [3, 0] }, 
         { name: 'Mike', punkte: [3, 2] },
@@ -63,31 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'AN', punkte: [0, 3] }
     ];
 
-    // *** MANUELLER VERGLEICHSWERT für die historische Platzierungsveränderung ***
-    // Dieses Objekt muss manuell aktualisiert werden!
-    const altePlatzierungManuell = {
-        'Leo': 2,
-        'Mika': 5,
-        'Mike': 3,
-        'Max': 9,
-        'Der Tobi': 4,
-        'Reisbällchen': 1,
-        'Ruben': 9,
-        'Lucas': 8,
-        'Jul': 7,
-        'Robert S.': 4,
-        'Arian': 9,
-        'Lennox': 9,
-        'Henrik': 9,
-        'Robert M.': 9,
-        'AN': 6
-    };
-
-
     // Berechnung der Metriken
-    let gesamtpunkteSumme = 0;
     let gesamtdurchschnittSumme = 0;
-    const rundenAnzahl = spieler[0].punkte.length; // Geht davon aus, dass alle die gleiche Rundenanzahl haben
+    let klassenLetzteRundeSumme = 0;
     
     spieler.forEach(s => {
         const summe = s.punkte.reduce((sum, p) => sum + p, 0);
@@ -95,29 +73,46 @@ document.addEventListener('DOMContentLoaded', () => {
         s.gesamt = summe;
         s.durchschnitt = runden > 0 ? summe / runden : 0;
         s.letzte_runde = s.punkte[s.punkte.length - 1] || 0;
-
-        gesamtpunkteSumme += summe;
+        
+        // NEU: Berechne Gesamtpunkte der Vorrunde
+        // Summe aller Punkte außer dem letzten (neuesten) Wert.
+        const vorrundenPunkte = s.punkte.slice(0, runden - 1);
+        s.gesamt_vorrunde = vorrundenPunkte.reduce((sum, p) => sum + p, 0);
+        
         gesamtdurchschnittSumme += s.durchschnitt;
+        klassenLetzteRundeSumme += s.letzte_runde;
     });
 
     const klassenDurchschnitt = gesamtdurchschnittSumme / spieler.length;
-    const klassenLetzteRundeDurchschnitt = spieler.reduce((sum, s) => sum + s.letzte_runde, 0) / spieler.length;
+    const klassenLetzteRundeDurchschnitt = klassenLetzteRundeSumme / spieler.length;
 
     
-    // Berechnung der fixen Platzierung (nach Gesamtpunkten)
-    function calculatePlatzierung(data) {
-        data.sort((a, b) => b.gesamt - a.gesamt);
+    // Funktion zur Berechnung der Platzierung basierend auf einem Kriterium
+    function calculatePlatzierung(data, criterion) {
+        // Sortiere eine Kopie der Daten, um die Originalreihenfolge nicht zu zerstören
+        let tempSortedData = [...data].sort((a, b) => b[criterion] - a[criterion]);
         let currentRank = 1;
-        for (let i = 0; i < data.length; i++) {
-            if (i > 0 && data[i].gesamt === data[i - 1].gesamt) {
-                data[i].platz = data[i - 1].platz;
+        
+        let platzierungen = {};
+
+        for (let i = 0; i < tempSortedData.length; i++) {
+            let rank;
+            if (i > 0 && tempSortedData[i][criterion] === tempSortedData[i - 1][criterion]) {
+                rank = tempSortedData[i - 1].temp_rank;
             } else {
-                data[i].platz = currentRank;
+                rank = currentRank;
             }
+            tempSortedData[i].temp_rank = rank;
+            platzierungen[tempSortedData[i].name] = rank;
             currentRank++;
         }
+        return platzierungen;
     }
-    calculatePlatzierung(spieler);
+    
+    // Platzierungen berechnen
+    const aktuellePlatzierung = calculatePlatzierung(spieler, 'gesamt');
+    const altePlatzierung = calculatePlatzierung(spieler, 'gesamt_vorrunde');
+
 
     // ---------------- 3. Haupt-Rendering-Funktion ----------------
 
@@ -128,6 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
              sortedSpieler.sort((a, b) => b[sortCriterion] - a[sortCriterion]);
         } 
         
+        // Platzierung für die Anzeige festlegen (1., 2., 3., etc.)
         let displayRank = 1;
         for (let i = 0; i < sortedSpieler.length; i++) {
             if (i > 0 && sortedSpieler[i][sortCriterion] === sortedSpieler[i - 1][sortCriterion]) {
@@ -137,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             displayRank++;
         }
-
 
         const tbody = document.querySelector('#rangliste tbody');
         if (!tbody) return;
@@ -150,13 +145,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // --- Logik für die Spalte 'Veränderung' ---
             
             if (sortCriterion === 'gesamt') {
-                // HIER: Historischer Platzierungsvergleich (funktioniert immer)
-                const altPlatz = altePlatzierungManuell[s.name]; 
-                const neuPlatz = s.platz; 
+                // NEU: Dynamischer historischer Platzierungsvergleich
+                const altPlatz = altePlatzierung[s.name] || s.punkte.length; // Wenn neu, setze auf maximale Ränge
+                const neuPlatz = aktuellePlatzierung[s.name]; 
 
                 let diffValue = 0;
                 
-                if (altPlatz != null) {
+                if (s.punkte.length > 1) { // Nur vergleichen, wenn mehr als 1 Runde gespielt wurde
                     diffValue = altPlatz - neuPlatz; 
                     
                     if (diffValue > 0) {
@@ -171,11 +166,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 } else {
                     diffClass = 'same';
-                    symbol = '—';
+                    symbol = '—'; // Erste Runde, kein Vergleich möglich
                 }
 
             } else if (sortCriterion === 'letzte_runde') {
-                // HIER: Vergleich mit dem Durchschnitt der LETZTEN RUNDE der Klasse
+                // Vergleich mit dem Durchschnitt der LETZTEN RUNDE der Klasse
                 if (s.letzte_runde > klassenLetzteRundeDurchschnitt) {
                     diffClass = 'up';
                     symbol = 'Über Ø ▲';
@@ -188,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
             } else if (sortCriterion === 'durchschnitt') {
-                 // HIER: Vergleich mit dem GESAMT-DURCHSCHNITT der Klasse
+                 // Vergleich mit dem GESAMT-DURCHSCHNITT der Klasse
                 if (s.durchschnitt > klassenDurchschnitt) {
                     diffClass = 'up';
                     symbol = 'Über Ø ▲';
@@ -217,17 +212,27 @@ document.addEventListener('DOMContentLoaded', () => {
         attachPlayerEvents();
     }
     
-    // ---------------- 4. Event Listener und Speicherung ----------------
+    // ---------------- 4. Event Listener (Mobile Fix) ----------------
     
     function attachPlayerEvents() {
         const infoBox = document.getElementById('durchschnittsanzeige');
         
         document.querySelectorAll('.player-name').forEach(nameCell => {
             nameCell.removeEventListener('click', showPlayerStats); 
+            nameCell.removeEventListener('touchend', showPlayerStats);
+            
+            // 'touchend' für sofortige Reaktion auf Touch-Geräten
+            nameCell.addEventListener('touchend', showPlayerStats); 
+            // Fallback für Desktop:
             nameCell.addEventListener('click', showPlayerStats); 
         });
         
-        function showPlayerStats() {
+        function showPlayerStats(event) {
+            // Verhindere Klick-Verzögerung auf Touch-Geräten
+            if (event.type === 'touchend') {
+                event.preventDefault(); 
+            }
+            
             const name = this.getAttribute('data-name');
             const punkte = JSON.parse(this.dataset.points);
             const summe = punkte.reduce((sum, p) => sum + p, 0);

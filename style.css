@@ -1,4 +1,4 @@
-/* style.css: Matrix Rangliste Design (Update mit Filtern) */
+/* style.css: Matrix Rangliste Design (Final) */
 
 /* Universeller Box-Model-Reset */
 *, *::before, *::after {
@@ -13,7 +13,6 @@ body {
     color: #00ff66; /* Helles Grün: Die Hauptfarbe */
     background: black;
 }
-/* ... (Canvas, Container, H1, Subtitle bleiben unverändert) ... */
 canvas {
     position: fixed;
     top: 0;
@@ -52,13 +51,17 @@ h1 {
     font-size: 14px;
     border-bottom: 1px solid rgba(0, 255, 100, 0.3);
     margin-bottom: 15px;
+    /* Desktop-Anzeige */
+    display: flex;
+    justify-content: center;
+    gap: 15px;
 }
 .filter-controls label {
     margin-right: 8px;
     cursor: pointer;
 }
 .filter-controls input[type="radio"] {
-    margin-left: 15px;
+    margin-left: 5px;
 }
 
 /* --- ELEMENT: Info-Box --- */
@@ -81,69 +84,34 @@ h1 {
     box-shadow: 0 0 10px 2px #00ff66 !important;
 }
 
-
+/* ... (Tabellenstile bleiben unverändert) ... */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
-
 th, td {
     border-bottom: 1px solid #00ff66;
     padding: 10px 5px;
     text-align: center;
 }
-
 th {
     background: rgba(0, 255, 100, 0.1);
 }
-
 tr:hover {
     background: rgba(0, 255, 100, 0.2);
 }
 
-/* ------------------------------------------------ */
 /* Spaltenbreiten-Zuweisung */
-/* ------------------------------------------------ */
+#rangliste th:nth-child(1), #rangliste td:nth-child(1) { width: 15%; }
+#rangliste th:nth-child(2), #rangliste td:nth-child(2) { width: 45%; text-align: left; }
+#rangliste th:nth-child(3), #rangliste td:nth-child(3) { width: 25%; }
+#rangliste th:nth-child(4), #rangliste td:nth-child(4) { width: 15%; }
 
-/* 1. Platz (15%) */
-#rangliste th:nth-child(1),
-#rangliste td:nth-child(1) {
-    width: 15%; 
-}
-
-/* 2. Name (45%) - Leicht reduziert, um Platz für die Diff-Zahl zu schaffen */
-#rangliste th:nth-child(2),
-#rangliste td:nth-child(2) {
-    width: 45%;
-    text-align: left; 
-}
-
-/* 3. Gesamtpunkte (25%) */
-#rangliste th:nth-child(3),
-#rangliste td:nth-child(3) {
-    width: 25%;
-}
-
-/* 4. Veränderung (15%) */
-#rangliste th:nth-child(4),
-#rangliste td:nth-child(4) {
-    width: 15%;
-}
-
-
-/* Stilklassen für die DETAILLIERTE Veränderung (Zahl + Pfeil) */
-.up {
-    color: #00ff66; 
-    font-weight: bold;
-}
-.down {
-    color: #ff4444; 
-    font-weight: bold;
-}
-.same {
-    color: #aaaaaa; 
-}
+/* Stilklassen für die DETAILLIERTE Veränderung */
+.up { color: #00ff66; font-weight: bold; }
+.down { color: #ff4444; font-weight: bold; }
+.same { color: #aaaaaa; }
 
 .player-name {
     cursor: pointer;
@@ -156,14 +124,34 @@ tr:hover {
 
 /* Mobile Anpassung */
 @media (max-width: 650px) {
+    /* Filter-Anzeige FIX: Flexibel anordnen, damit sie nicht überlaufen */
     .filter-controls {
         font-size: 12px;
         padding: 8px 0;
+        flex-wrap: wrap; 
+        gap: 5px 10px; 
     }
+    .filter-controls label {
+        margin-left: 0;
+    }
+    .filter-controls input[type="radio"] {
+        margin-left: 5px;
+    }
+    
     th, td {
         font-size: 14px;
         padding: 6px 3px;
     }
+
+    .container {
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+    
     /* Mobile Breiten */
     #rangliste th:nth-child(1), #rangliste td:nth-child(1) { width: 15%; }
     #rangliste th:nth-child(2), #rangliste td:nth-child(2) { width: 40%; }
