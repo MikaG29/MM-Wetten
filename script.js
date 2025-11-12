@@ -28,16 +28,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------------- Rangliste ----------------
 
   let spieler = [
-    { name: 'Leo', punkte: [3] },
-    { name: 'Mika', punkte: [3] },
-    { name: 'Mike', punkte: [3] },
-    { name: 'Max', punkte: [0] },
-    { name: 'Der Tobi', punkte: [0] },
-    { name: 'Reisbällchen', punkte: [5] },
-    { name: 'Ruben', punkte: [0] },
-    { name: 'Lucas', punkte: [0] },
-    { name: 'Jul', punkte: [0] },
-    { name: 'Robert M.', punkte: [0] }
+    { name: 'Leo', punkte: [3, 3] },
+    { name: 'Mika', punkte: [3, 0] },
+    { name: 'Mike', punkte: [3, 2] },
+    { name: 'Max', punkte: [0, 0] },
+    { name: 'Der Tobi', punkte: [0, 4] },
+    { name: 'Reisbällchen', punkte: [5, 0] },
+    { name: 'Ruben', punkte: [0, 0] },
+    { name: 'Lucas', punkte: [0, 1] },
+    { name: 'Jul', punkte: [0, 2] },
+    { name: 'Robert S.', punkte: [0, 4] },
+    { name: 'Arian', punkte: [0, 0] },
+    { name: 'Lennox', punkte: [0, 0] },
+    { name: 'Henrik', punkte: [0, 0] },
+    { name: 'Robert M.', punkte: [0, 0] },
+    { name: 'AN', punkte: [0, 3] }
   ];
 
   let letztePlatzierung = JSON.parse(localStorage.getItem('letztePlatzierung')) || {};
