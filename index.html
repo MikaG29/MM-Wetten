@@ -1,31 +1,48 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MM-Wetten Rangliste</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" sizes="32x32" href="574f28f644c5901c53864c226c2d3945.jpg">
-  <link rel="apple-touch-icon" sizes="180x180" href="574f28f644c5901c53864c226c2d3945.jpg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TG-Wetten Rangliste</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <canvas id="matrix"></canvas>
-  <div class="container">
-    <h1>MM-Wetten Rangliste</h1>
-    <table id="rangliste">
-      <thead>
-        <tr>
-          <th>Platz</th>
-          <th>Name</th>
-          <th>Punkte</th>
-          <th>Veränderung</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
+    <canvas id="matrix"></canvas> 
+    
+    <div class="container">
+        <h1>TG-Wetten Rangliste</h1>
+        <p class="subtitle">Klicke auf einen Namen für den Punktedurchschnitt.</p>
+        
+        <div class="filter-controls">
+            <label>Sortieren nach:</label>
+            <input type="radio" id="sort_gesamt" name="sort_by" value="gesamt" checked>
+            <label for="sort_gesamt">Gesamtpunkte</label>
+            
+            <input type="radio" id="sort_last_round" name="sort_by" value="letzte_runde">
+            <label for="sort_last_round">Letzte Runde</label>
+            
+            <input type="radio" id="sort_average" name="sort_by" value="durchschnitt">
+            <label for="sort_average">Durchschnitt</label>
+        </div>
+        
+        <div id="durchschnittsanzeige" class="info-box">
+            Wähle einen Spieler.
+        </div>
+        
+        <table id="rangliste">
+            <thead>
+                <tr>
+                    <th>Platz</th>
+                    <th>Name</th>
+                    <th>Gesamtpunkte</th>
+                    <th>Veränderung</th>
+                </tr>
+            </thead>
+            <tbody>
+                </tbody>
+        </table>
+    </div>
 
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
-
