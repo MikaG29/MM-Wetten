@@ -33,8 +33,9 @@ canvas {
 
 h1 {
     text-align: center;
-    text-shadow: 0 0 10px #00ff66;
     margin-bottom: 5px;
+    font-size: 40px;
+    color: white;
 }
 
 .subtitle {
