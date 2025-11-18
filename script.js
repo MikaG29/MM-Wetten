@@ -46,21 +46,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // *** HAUPTDATEN: HIER die neuen Punkte pro Runde eintragen! ***
     let spieler = [
         // Beispiel: Punkte R1, R2, R3. Die alte Rangliste wird anhand von R1+R2 berechnet!
-        { name: 'Leo', punkte: [3, 3] }, 
-        { name: 'Mika', punkte: [3, 0] }, 
-        { name: 'Mike', punkte: [3, 2] },
-        { name: 'Max', punkte: [0, 0] },
-        { name: 'Der Tobi', punkte: [0, 4] },
-        { name: 'Reisbällchen', punkte: [5, 0] },
-        { name: 'Ruben', punkte: [0, 0] },
-        { name: 'Lucas', punkte: [0, 1] },
-        { name: 'Jul', punkte: [0, 2] },
-        { name: 'Robert S.', punkte: [0, 4] },
-        { name: 'Arian', punkte: [0, 0] },
-        { name: 'Lennox', punkte: [0, 0] },
-        { name: 'Henrik', punkte: [0, 0] },
-        { name: 'Robert M.', punkte: [0, 0] },
-        { name: 'AN', punkte: [0, 3] }
+        { name: 'Leo', punkte: [3, 3, 0] }, 
+        { name: 'Mika', punkte: [3, 0, 2] }, 
+        { name: 'Mike', punkte: [3, 2, 3] },
+        { name: 'Max', punkte: [0, 0, 1] },
+        { name: 'Der Tobi', punkte: [0, 4, 2] },
+        { name: 'Reisbällchen', punkte: [5, 0, 3] },
+        { name: 'Ruben', punkte: [0, 0, 1] },
+        { name: 'Lucas', punkte: [0, 1, 2] },
+        { name: 'Jul', punkte: [0, 2, 0] },
+        { name: 'Robert S.', punkte: [0, 4, 0] },
+        { name: 'Arian', punkte: [0, 0, 1] },
+        { name: 'Lennox', punkte: [0, 0, 3] },
+        { name: 'Henrik', punkte: [0, 0, 1] },
+        { name: 'Robert M.', punkte: [0, 0, 5] }
     ];
 
     // Berechnung der Metriken
