@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Arian', punkte: [0, 0, 1, 0, 5] },
         { name: 'Lennox', punkte: [0, 0, 3, 3, 4] },
         { name: 'Henrik', punkte: [0, 0, 1, 0, 0] },
-        { name: 'Robert M.', punkte: [0, 0, 5, 0, -50] }
+        { name: 'Robert M.', punkte: [0, 0, 5, 0, 0] }
     ];
 
     // Berechnung der Metriken
