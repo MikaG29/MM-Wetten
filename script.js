@@ -41,25 +41,23 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(drawMatrix, 40);
     }
 
-    // ---------------- 2. Rangliste Daten und Initialisierung ----------------
-
-    // *** HAUPTDATEN: HIER die neuen Punkte pro Runde eintragen! ***
     let spieler = [
-        // Beispiel: Punkte R1, R2, R3. Die alte Rangliste wird anhand von R1+R2 berechnet!
-        { name: 'Leo', punkte: [3, 3, 0, 0, 0, 5, 0, 2, 3] }, 
-        { name: 'Mika', punkte: [3, 0, 2, 0, 2, 5, 0, 3, 4] }, 
-        { name: 'Mike', punkte: [3, 2, 3, 0, 4, 1, 2, 4, 5] },
-        { name: 'Max', punkte: [0, 0, 1, 2, 2, 4, 0, 1, 3] },
-        { name: 'Der Tobi', punkte: [0, 4, 2, 2, 3, 4, 0, 3, 5] },
-        { name: 'Reisbällchen', punkte: [5, 0, 3, 0, 2, 3, 0, 4, 4] },
-        { name: 'Ruben', punkte: [0, 0, 1, 0, 4, 0, 0, 0, 5] },
-        { name: 'Lucas', punkte: [0, 1, 2, 1, 0, 2, 0, 0, 4] },
-        { name: 'Jul', punkte: [0, 2, 0, 5, 3, 2, 0, 0, 3] },
-        { name: 'Robert S.', punkte: [0, 4, 0, 0, 0, 3, 0, 2, 1] },
-        { name: 'Arian', punkte: [0, 0, 1, 0, 5, 0, 0, 2, 3] },
-        { name: 'Lennox', punkte: [0, 0, 3, 3, 4, 3, 0, 5, 2] },
-        { name: 'Henrik', punkte: [0, 0, 1, 0, 0, 4, 0, 1, 2] },
-        { name: 'Robert M.', punkte: [0, 0, 5, 0, 0, 0, 0, 4, 0] }
+        [
+        { name: 'Leo', punkte: [3, 3, 0, 0, 0, 5, 0, 2, 3, 3, 4, 5, 3, 1] }, 
+        { name: 'Mika', punkte: [3, 0, 2, 0, 2, 5, 0, 3, 4, 0, 5, 3, 3, 4] }, 
+        { name: 'Mike', punkte: [3, 2, 3, 0, 4, 1, 2, 4, 5, 0, 4, 4, 2, 0] },
+        { name: 'Max', punkte: [0, 0, 1, 2, 2, 4, 0, 1, 3, 0, 2, 2, 3, 5] },
+        { name: 'Der Tobi', punkte: [0, 4, 2, 2, 3, 4, 0, 3, 5, 1, 1, 0, 2, 2] },
+        { name: 'Reisbällchen', punkte: [5, 0, 3, 0, 2, 3, 0, 4, 4, 0, 1, 5, 2, 0] },
+        { name: 'Ruben', punkte: [0, 0, 1, 0, 4, 0, 0, 0, 5, 3, 4, 3, 4, 1] },
+        { name: 'Lucas', punkte: [0, 1, 2, 1, 0, 2, 0, 0, 4, 0, 3, 5, 1, 2] },
+        { name: 'Jul', punkte: [0, 2, 0, 5, 3, 2, 0, 0, 3, 0, 4, 0, 2, 3] },
+        { name: 'Robert S.', punkte: [0, 4, 0, 0, 0, 3, 0, 2, 1, 0, 5, 1, 4, 2] },
+        { name: 'Arian', punkte: [0, 0, 1, 0, 5, 0, 0, 2, 3, 0, 2, 0, 4, 3] },
+        { name: 'Lennox', punkte: [0, 0, 3, 3, 4, 3, 0, 5, 2, 0, 1, 4, 5, 0] },
+        { name: 'Henrik', punkte: [0, 0, 1, 0, 0, 4, 0, 1, 2, 0, 3, 2, 1, 4] },
+        { name: 'Robert M.', punkte: [0, 0, 5, 0, 0, 0, 0, 4, 0, 1, 0, 5, 3, 2] }
+]
     ];
 
     // Berechnung der Metriken
