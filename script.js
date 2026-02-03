@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let spieler = [
         { name: 'Leo', punkte: [3, 3, 0, 0, 0, 5, 0, 2, 3, 3, 4, 5, 3, 1] }, 
-        { name: 'Mika', punkte: [3, 0, 2, 0, 2, 5, 0, 3, 4, 0, 5, 3, 3, 4] }, 
+        { name: 'Mika', punkte: [3, 0, 2, 0, 2, 5, 0, 3, 4, 0, 5, 3, 3, 0] }, 
         { name: 'Mike', punkte: [3, 2, 3, 0, 4, 1, 2, 4, 5, 0, 4, 4, 2, 0] },
         { name: 'Max', punkte: [0, 0, 1, 2, 2, 4, 0, 1, 3, 0, 2, 2, 3, 5] },
         { name: 'Der Tobi', punkte: [0, 4, 2, 2, 3, 4, 0, 3, 5, 1, 1, 0, 2, 2] },
